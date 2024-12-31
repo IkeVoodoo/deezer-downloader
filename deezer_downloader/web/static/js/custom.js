@@ -107,9 +107,17 @@ $(document).ready(function() {
         $("#results").append(row); 
         row.append($("<td>" + rowData.artist + "</td>"));
         row.append($("<td>" + rowData.title + "</td>"));
-        
-        row.append("<td><img src='"+rowData.img_url+"'> " + rowData.album + "</a></td>");
-        
+
+        const albumNameButton = $(
+            `<td style="cursor: pointer;"><img src='${rowData.img_url}' /><span>${rowData.album + ""}</span></td>`
+        )
+
+        if(mtype !== "album") {
+            row.append(albumNameButton.click(() => deezer_load_list("album_track", `${rowData.album_id}`)));
+        } else {
+            row.append(albumNameButton);
+        }
+
         if (rowData.preview_url) {
             row.append($('<td> <button class="btn btn-default" onclick="play_preview(\'' + rowData.preview_url + '\');" > <i class="fa fa-headphones fa-lg" title="listen preview in browser" ></i> </button> </td>'));
         }
